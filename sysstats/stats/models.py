@@ -17,6 +17,7 @@ class NetworkRecord(models.Model):
     network_up = models.IntegerField(validators=[MinValueValidator(0)])
 
 class Record(models.Model):
+    record_id = models.IntegerField(primary_key=True)
     cpu_usage = models.IntegerField(validators=[MinValueValidator(0)])
     ram_usage = models.ForeignKey(RamRecord, on_delete=models.CASCADE)
     drive_usage = models.ForeignKey(DriveRecord, on_delete=models.CASCADE)
