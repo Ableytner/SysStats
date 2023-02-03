@@ -1,0 +1,14 @@
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/test.css' %}" id="test-style">
+</head>
+<body>
+    <h1 id="title">
+        System Stats
+    </h1>
+    <img id="piechart" src="{% static 'images/cpu_usage.png' %}">
+    <img id="piechart" src="{% static 'images/ram_usage.png' %}">
+    <img id="piechart" src="{% static 'images/drive_usage.png' %}">
+</body>
+</html>

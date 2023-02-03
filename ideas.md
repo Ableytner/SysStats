@@ -4,7 +4,7 @@
 
 ## Website shows grahps of past hardware usage amounts
 
-## Server saves usage for a day and deletes it after
+## Server saves usage for a day and deletes it after, keeping the average for every day
 
 ## Support for windows PCs
 
