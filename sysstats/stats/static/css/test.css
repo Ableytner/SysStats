@@ -11,6 +11,10 @@ body {
     width: 33%;
 }
 
+#histogram {
+    width: 33%;
+}
+
 .box {
     background-color: #9c9c9c;
     border: 1px solid #ffffff;

@@ -1,39 +1,36 @@
 import psutil
 
-from stats.models import Record, RamRecord, DriveRecord, NetworkRecord
+from stats.models import NetworkRecord
 
-def get():
+def get(UPDATE_DELAY: int):
     svmem = psutil.virtual_memory()
-    ram_record = RamRecord(
-        ram_usage=svmem.used,
-        ram_total=svmem.total
-    )
-    ram_record.save()
 
     disk_data = _get_disk_data()
-    last_drive_record = DriveRecord.objects.last()
-    drive_record = DriveRecord(
-        drive_change=(disk_data["usage"] - last_drive_record.drive_usage) if last_drive_record is not None else 0,
-        drive_usage=disk_data["usage"],
-        total_drive_size=disk_data["total"]
-    )
-    drive_record.save()
 
     snetio = psutil.net_io_counters()
     last_network_record = NetworkRecord.objects.last()
-    network_record = NetworkRecord(
-        network_up=(snetio.bytes_sent - last_network_record.network_up) if last_network_record is not None else 0,
-        network_down=(snetio.bytes_recv - last_network_record.network_down) if last_network_record is not None else 0
-    )
-    network_record.save()
+    if last_network_record is None or \
+       (last_network_record.network_up_total > snetio.bytes_sent and \
+        last_network_record.network_down_total > snetio.bytes_recv):
+        netw_up = 0
+        netw_down = 0
+    else:
+        netw_up = int((snetio.bytes_sent - last_network_record.network_up_total) / UPDATE_DELAY)
+        netw_down = int((snetio.bytes_recv - last_network_record.network_down_total) / UPDATE_DELAY)
 
-    record = Record(
-        cpu_usage=psutil.cpu_percent(interval=1),
-        ram_usage=ram_record,
-        drive_usage=drive_record,
-        network_usage=network_record
-    )
-    record.save()
+    stats = {
+        "cpu": psutil.cpu_percent(interval=1),
+        "ram_u": svmem.used,
+        "ram_t": svmem.total,
+        "disk_u": disk_data["usage"],
+        "disk_t": disk_data["total"],
+        "netw_s": netw_up,
+        "netw_r": netw_down,
+        "netw_s_t": snetio.bytes_sent,
+        "netw_r_t": snetio.bytes_recv
+    }
+    # print("Adding stats", stats)
+    return stats
 
 def _get_disk_data() -> dict[str,int]:
     disk_usage = 0

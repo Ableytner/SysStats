@@ -1,0 +1,1 @@
+py sysstats/manage.py test stats.tests

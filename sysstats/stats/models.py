@@ -11,8 +11,10 @@ class DriveRecord(models.Model):
     total_drive_size = models.IntegerField(validators=[MinValueValidator(0)])
 
 class NetworkRecord(models.Model):
-    network_down = models.IntegerField(validators=[MinValueValidator(0)])
-    network_up = models.IntegerField(validators=[MinValueValidator(0)])
+    network_up = models.BigIntegerField(validators=[MinValueValidator(0)])
+    network_down = models.BigIntegerField(validators=[MinValueValidator(0)])
+    network_up_total = models.BigIntegerField(validators=[MinValueValidator(0)])
+    network_down_total = models.BigIntegerField(validators=[MinValueValidator(0)])
 
 class Record(models.Model):
     cpu_usage = models.IntegerField(validators=[MinValueValidator(0)])

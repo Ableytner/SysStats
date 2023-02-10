@@ -1,0 +1,16 @@
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/test.css' %}" id="test-style">
+</head>
+<body>
+    <h1 id="title">
+        System Stats - History
+    </h1>
+    <img id="histogram" src="{% static 'images/cpu_usage_histogram.png' %}">
+    <img id="histogram" src="{% static 'images/ram_usage_histogram.png' %}">
+    <img id="histogram" src="{% static 'images/drive_usage_histogram.png' %}">
+    <img id="histogram" src="{% static 'images/network_download_histogram.png' %}">
+    <img id="histogram" src="{% static 'images/network_upload_histogram.png' %}">
+</body>
+</html>
