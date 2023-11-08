@@ -3,5 +3,6 @@
 *\.vscode
 *\migrations
 *\images
+venv
 *.pyc
 *.sqlite3
